@@ -2,31 +2,27 @@ import AddBookButton from "./components/addBookButton";
 import Header from "./components/header";
 import SearchBook from "./components/searchBook";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainContent from "./components/mainContent";
+import { MY_BOOKS_CONTEXT_PROVIDER } from "./contexts/my_books_context";
 const App = () => {
   return (
     <BrowserRouter>
-      <main>
-        <Header></Header>
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <h2 className="text-2xl text-center m-4">
-                this is the main page content
-              </h2>
-            }
-          ></Route>
+      <MY_BOOKS_CONTEXT_PROVIDER>
+        <main>
+          <Header></Header>
+          <Routes>
+            <Route exact path="/" element={<MainContent></MainContent>}></Route>
 
-          <Route
-            exact
-            path="/search"
-            element={<SearchBook></SearchBook>}
-          ></Route>
-        </Routes>
+            <Route
+              exact
+              path="/search"
+              element={<SearchBook></SearchBook>}
+            ></Route>
+          </Routes>
 
-        <AddBookButton></AddBookButton>
-      </main>
+          <AddBookButton></AddBookButton>
+        </main>
+      </MY_BOOKS_CONTEXT_PROVIDER>
     </BrowserRouter>
   );
 };
