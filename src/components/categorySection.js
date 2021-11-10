@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { MY_BOOKS_CONTEXT } from "../contexts/my_books_context";
 import Book from "./book";
 import BookList from "./bookList";
-const CategorySection = ({ categoryName, books }) => {
-  const { myBooks, setMyBooks } = useContext(MY_BOOKS_CONTEXT);
+const CategorySection = ({ categoryName }) => {
+  const { myBooks } = useContext(MY_BOOKS_CONTEXT);
 
   return (
     <section className="mb-6 md:mb-16">

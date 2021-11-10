@@ -1,9 +1,10 @@
 import AddBookButton from "./components/addBookButton";
 import Header from "./components/header";
-import SearchBook from "./components/searchBook";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainContent from "./components/mainContent";
 import { MY_BOOKS_CONTEXT_PROVIDER } from "./contexts/my_books_context";
+import SearchPage from "./components/searchPage";
 const App = () => {
   return (
     <BrowserRouter>
@@ -16,7 +17,7 @@ const App = () => {
             <Route
               exact
               path="/search"
-              element={<SearchBook></SearchBook>}
+              element={<SearchPage></SearchPage>}
             ></Route>
           </Routes>
 
