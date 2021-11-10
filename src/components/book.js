@@ -4,10 +4,12 @@ import { useContext } from "react";
 import { MY_BOOKS_CONTEXT } from "../contexts/my_books_context";
 import not_found_img from "../assets/image-not-found.svg";
 const Book = ({ book }) => {
+  //variables
   const { setMyBooks } = useContext(MY_BOOKS_CONTEXT);
 
   const [selectedShelf, setSelectedShelf] = useState(book.shelf);
 
+  //functions
   const changeShelf = async () => {
     try {
       const isUpdated = await update(book, selectedShelf);

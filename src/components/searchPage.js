@@ -4,29 +4,31 @@ import { useState } from "react/cjs/react.development";
 import { search } from "../api/BooksApi";
 import Book from "./book";
 import { useEffect } from "react";
-import _debounce from "lodash/debounce";
+
+import { useContext } from "react";
+import { MY_BOOKS_CONTEXT } from "../contexts/my_books_context";
 const SearchPage = () => {
-  //varianles
+  //variables
   const [searchedText, setSearchedText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
+  const { myBooks } = useContext(MY_BOOKS_CONTEXT);
   //functions
-  const makeSearchRequest = _debounce(async () => {
-    if (searchedText) {
-      const res = await search(searchedText);
+  const makeSearchRequest = async () => {
+    const res = await search(searchedText);
 
-      if (res.hasOwnProperty("error")) {
-        setSearchResult(res.items);
-      } else {
-        setSearchResult(res);
-      }
+    if (res.hasOwnProperty("error")) {
+      setSearchResult(res.items);
     } else {
-      setSearchResult([]);
+      setSearchResult(res);
     }
-  }, 1000);
+  };
 
   useEffect(() => {
-    makeSearchRequest();
+    if (searchedText === "") {
+      setSearchResult([]);
+    } else {
+      makeSearchRequest();
+    }
   }, [searchedText]);
 
   return (
@@ -38,13 +40,20 @@ const SearchPage = () => {
       <BookList>
         {searchResult
           ? searchResult.map((book) => {
-              if (book.shelf) {
-                return <Book key={book.id} book={book}></Book>;
-              } else {
-                return (
-                  <Book key={book.id} book={{ ...book, shelf: "none" }}></Book>
-                );
-              }
+              return (
+                <Book
+                  key={book.id}
+                  book={
+                    myBooks.find((item) => {
+                      return item.id === book.id;
+                    })
+                      ? myBooks.find((item) => {
+                          return item.id === book.id;
+                        })
+                      : { ...book, shelf: "none" }
+                  }
+                ></Book>
+              );
             })
           : ""}
       </BookList>
